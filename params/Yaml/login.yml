@@ -1,0 +1,27 @@
+# 企业后台登录
+-
+  detail: !!str 全局管理员登录
+  name: passport.login.security
+  api: /passport/api
+  method: post
+  headers: None
+  data:
+      account: 18888888888
+      password: a111111
+      returnUrl: !!str
+      captcha: !!str
+  assert_type: notEqual
+  check: None
+
+# 企业后台获取Token
+-
+  detail: !!str 获取Token信息
+  name: passport.userinfo.bycode
+  api: /passport/api
+  method: post
+  headers: None
+  data:
+      code: None
+  assert_type: notEqual
+  check: None
+
