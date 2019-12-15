@@ -91,7 +91,8 @@ class Sign:
         for param_key in param_keys:
 
             # 按照key+value的样式拼接字符串
-            string_sign += param_key+param[param_key]
+            string_sign += param_key+str(param[param_key])
+
 
         # 5.将secret拼接到首位两端
         string_sign = self.secret + string_sign + self.secret

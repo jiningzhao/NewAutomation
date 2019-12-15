@@ -4,69 +4,73 @@
 # from ..params.tools import GetYaml
 # from ..common.Assert import Assert
 import pytest
-from params.tools import GetYaml
+from params.tools import DisposeData
+# from params.tools import GetYaml
 from common.Assert import Assert
 
 
 class TestAddEmployeeProcess:
 
     @pytest.fixture()
-    def test_add_department(self, get_token, random_massage):
-
-        # 传入接口名称
-        name = 'old_add_department'
-
-        # 参数化
-        other_data = {
+    def test_add_department(self, random_massage, get_token):
+        # 接口名称为key,data为value
+        information = {
+            'name': "old_add_department",
+            'param': {
                 'name': str(random_massage['job']).replace("/",  ""),
                 'departmentTypeCode': random_massage['number(1-2)']
+            },
+            'api': "/http/saas/department/addTopDept.json",
+            'method': 'post'
         }
-        # 调用函数并取出返回值
-        response = GetYaml('add_employee', other_data=other_data, headers=get_token).case_select(name)
-
-        # 从返回值中取数据并进行断言
-        Assert(response['assert_type'], response['result']['success'], response['check'], response['result'])
-
-        # 返回想要的数据
-        return response['result']['data']
+        result = DisposeData(information, get_token).response_()
+        return result.get('data')
 
     @pytest.fixture()
     def test_add_position(self, get_token, random_massage):
-
-        name = 'old_add_position'
-        other_data = {
+        information = {
+            'name': 'old_add_position',
+            'param': {
                 'name': random_massage['job'],
                 'propertyCode': random_massage['number(1-3)']
+            },
+            'api': "/http/saas/position/add.json",
+            'method': 'post'
         }
-
-        response = GetYaml('add_employee', other_data=other_data, headers=get_token).case_select(name)
-
-        Assert(response['assert_type'], response['result']['success'], response['check'], response['result']['msg'])
-
-        return response['result']['data']
+        response = DisposeData(information, get_token).response_()
+        return response.get('data')
 
     def test_add_employee(self, get_token, random_massage, test_add_position, test_add_department):
 
-        name = 'passport.employee.add'
+        information = {
+            'name': 'passport.employee.add',
+            'data': {
+                'name': random_massage['name'],
+                'email': '',
+                'gender': 0,
+                'mobile': random_massage['mobile'],
+                'deptIds': [test_add_department],
+                'married': '',
+                'roleIds': [],
+                'joinDate': '2019-11-27',
+                'managers': [0],
+                'education': 2,
+                'documentNo': random_massage['ID_card'],
+                'employeeNo': '',
+                'positionId': test_add_position,
+                'defaultDept': '',
+                'documentType': 2
+            },
+            'api': '/passport/api',
+            'method': 'post'
 
-        other_data = {
-            'mobile': random_massage['mobile'],
-            'name': random_massage['name'],
-            'documentNo': random_massage['ID_card'],
-            'positionId': test_add_position,
-            'deptIds': [test_add_department]
         }
-
-        response = GetYaml('add_employee', other_data=other_data, headers=get_token).case_select(name)
-
-        Assert(response['assert_type'], response['result']['code'], response['check'], response['result']['msg'])
-
-        # Assert('IN', other_data['mobile'], 'mobile', None, response['DB_table'])
+        DisposeData(information, get_token).response_()
 
 
 if __name__ == '__main__':
     # pytest.main(['-v','-s','--setup-show'])
     # pytest.main(['-v','--pdb'])
-    pytest.main(['-v', '-s', 'add_product_test.py'])
+    pytest.main(['-v', '-s', "add_employee_test.py"])
     # pytest.main(['--collect-only'])
     # pytest.main(['--html=../report/report3.html'])

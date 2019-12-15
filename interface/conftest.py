@@ -1,39 +1,42 @@
 import pytest
 # import random
+import json
 from faker import Faker
-from params.tools import GetYaml
 from common.Assert import Assert
 # from ..DB_fixture.mysql_db import DB_fixture
+from params.tools import DisposeData
 
 
 @pytest.fixture(scope='class')
 def get_code():
 
-    name = 'passport.login.security'
-
-    response = GetYaml('login').case_select(name)
-
-    code = str(response['result']['value']).split('code=')[-1]
-
-    Assert(response['assert_type'], code, response['check'], response['detail'])
-
-    return code
+    information = {
+        'name': 'passport.login.security',
+        'data': {
+            "account": "18888888888",
+            "password": "a111111",
+            "returnUrl": "",
+            "captcha": ""
+        },
+        'api': "/passport/api",
+        'method': 'post'
+    }
+    result = DisposeData(information).response_()
+    return result.get('value').split('=')[1]
 
 
 @pytest.fixture(scope='class')
 def get_token(get_code):
-
-    name = 'passport.userinfo.bycode'
-
-    other_data = {'code': get_code}
-
-    response = GetYaml('login', other_data=other_data).case_select(name)
-
-    token = response['result']['value']['token']
-
-    Assert(response['assert_type'], token, response['check'], response['detail'])
-
-    return token
+    information = {
+        'name': 'passport.userinfo.bycode',
+        'data': {
+            "code": get_code
+        },
+        'api': "/passport/api",
+        'method': 'post'
+    }
+    result = DisposeData(information).response_()
+    return result.get('value').get('token')
 
 
 @pytest.fixture(scope='class')
