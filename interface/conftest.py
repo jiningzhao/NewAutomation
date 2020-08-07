@@ -10,7 +10,7 @@ def get_code():
     information = {
         'name': 'passport.login.security',
         'data': {
-            "account": "15110117932",
+            "account": "18888888888",
             "password": "a111111",
             "returnUrl": "",
             "captcha": ""
@@ -95,8 +95,8 @@ def chrome_config(test_add_new_product):
     chrome_option.add_experimental_option("excludeSwitches", ['enable-automation'])
     details = {
         'driver': webdriver.Chrome(options=chrome_option),
-        'repayment_name': "UI-收益管理方案100",
-        'calculate_rule_name': "UI-计算参数方案100",
+        'repayment_name': "UI-收益管理方案98",
+        'calculate_rule_name': "UI-计算参数方案98",
         'interest_allowance_name': "UI-贴息管理方案1",
         'product_name': test_add_new_product['productName'],
     }
@@ -108,7 +108,7 @@ def test_add_new_product(get_token, random_massage):
     information = {
         'name': 'npdc.producthandle.add',
         'data': {
-            "templateId": 14,
+            "templateId": 57,  # 客户模版14，测试环境57
             "objProductDtoList": [{
                 "objNo": "NPDC-TRUST-BASE-MESSAGE",
                 "info": {
@@ -165,7 +165,7 @@ def test_add_new_product(get_token, random_massage):
                     "riskLevelStr": "R1"
                 }
             }],
-            "categoryId": 25
+            "categoryId": 1848  # 客户环境25，测试环境 1848
         },
         'api': '/npdc-web/api',
         'method': 'post'

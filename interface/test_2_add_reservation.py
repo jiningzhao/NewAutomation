@@ -48,17 +48,18 @@ class TestPythonOrgSearch:
 
         # 输入服务名称
         self.wait_element_clicked(driver, xpath_str="/html/body/div[4]/div[1]/div[1]/ul/li[1]")
-        # self.wait_element_clicked(driver, xpath_str="//*/form/div[1]/div/div/div[2]/div/div[1]/input")
-        # time.sleep(10)
+        time.sleep(3)
         driver.find_element_by_xpath("//*/form/div[1]/div/div/div[2]/div/div[1]/input").send_keys(
             test_add_new_product['productName'])
 
+        # --------------------------------------------------------------------------------------------------------------
+
         # 点击服务
-        self.wait_element_clicked(driver,
-                                  xpath_str="//span[contains(text(),{})]".format(test_add_new_product['productName']))
+        # self.wait_element_clicked(driver,xpath_str="//span[contains(text(),{})]".format(test_add_new_product['productName']))
+        self.wait_element_clicked(driver, xpath_str="/html/body/div[4]/div[1]/div[1]/ul/li[1]")
 
         # 如果这样写会定位错，定位成新投资mq3,不知道为什么
-        driver.find_element_by_xpath("//span[contains(text(),{})]".format(test_add_new_product['productName'])).click()
+        driver.find_element_by_xpath("//span[contains(text(),\'{}\')]".format(test_add_new_product['productName'])).click()
 
         # 点击预约额度
         self.wait_element_clicked(driver, xpath_str='//*[@id="pane-0"]/form/div[2]/div/div/div[2]/div/input')
@@ -124,4 +125,3 @@ class TestPythonOrgSearch:
             print(e)
         finally:
             pass
-

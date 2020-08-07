@@ -12,7 +12,8 @@ class TestSetPlm:
     def test_0(self, chrome_config):
         driver = chrome_config['driver']
         driver.maximize_window()
-        driver.get("https://service-wbszdh.newbanker.cn/")
+        # driver.get("https://service-wbszdh.newbanker.cn/")
+        driver.get("https://service-wbs321.newtamp.cn/")
         # 等待元素出现
         self.wait_element(driver, classname='el-input__inner')
         # 定位用户名输入框并输入手机号
@@ -138,6 +139,9 @@ class TestSetPlm:
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//section[contains(text(),'同步产品信息')]"))
         self.wait_element(driver, 'el-table__row')
+        # 此处寻找同步过来的新产品
+        # self.wait_element(driver, xpath_str="//a[contains(text(),\'{}\')]".format(chrome_config['product_name']))
+        # driver.execute_script("document.documentElement.scrollTop=10000")
         # self.assertTrue(
         #     driver.find_element_by_xpath('//*[@id="pane-1"]/section/section[1]/div[2]/div[3]/table/tbody/tr'))
 
@@ -145,8 +149,8 @@ class TestSetPlm:
     def test_7(self, chrome_config):
         driver = chrome_config['driver']
         # 点击进入产品方案详情
-        self.wait_element(driver, xpath_str="//a[contains(text(),{})]".format(chrome_config['product_name']))
-        driver.find_element_by_xpath("//a[contains(text(),{})]".format(chrome_config['product_name'])).click()
+        self.wait_element(driver, xpath_str="//a[contains(text(),\'{}\')]".format(chrome_config['product_name']))
+        driver.find_element_by_xpath("//a[contains(text(),\'{}\')]".format(chrome_config['product_name'])).click()
         time.sleep(10)
         # self.assertIn('产品还没有配置相关运营方案', driver.page_source, msg="并非初始化页面！")
         self.wait_element(driver, xpath_str="//section[contains(text(),'配置运营方案')]")
