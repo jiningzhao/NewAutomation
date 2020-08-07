@@ -9,6 +9,7 @@ from urllib.parse import quote
 # import requests
 # from ..config.config import conf
 from config.config import Conf
+import logging
 
 
 class Sign:
@@ -19,6 +20,8 @@ class Sign:
 
         # 2.对入参进行处理
         self.param = self.param_fix(param)
+
+        logging.debug(self.param)
 
     # 处理入参的函数
     def param_fix(self, param):
