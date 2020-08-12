@@ -7,6 +7,7 @@ from common.tools import DisposeData
 
 class TestAddNewProductProcess:
     @pytest.mark.smoke
+    @pytest.mark.smoke0
     def test_add_new_product(self, get_token, test_add_new_product):
         information = {
             'name': 'npdc.product.shelf',

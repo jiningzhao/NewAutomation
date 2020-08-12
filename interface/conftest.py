@@ -87,7 +87,7 @@ def test_add_position(get_token, random_massage):
 
 
 @pytest.fixture(scope='session')
-def chrome_config(test_add_new_product):
+def chrome_config(test_add_new_product, random_massage):
     chrome_option = webdriver.ChromeOptions()
     chrome_option.add_argument('--incognito')
     chrome_option.add_argument('--blink-settings=imagesEnabled=false')
@@ -95,9 +95,10 @@ def chrome_config(test_add_new_product):
     chrome_option.add_experimental_option("excludeSwitches", ['enable-automation'])
     details = {
         'driver': webdriver.Chrome(options=chrome_option),
-        'repayment_name': "UI-收益管理方案98",
-        'calculate_rule_name': "UI-计算参数方案98",
-        'interest_allowance_name': "UI-贴息管理方案1",
+        'repayment_name': "UI-收益管理方案" + str(random_massage['number(1-400)']),
+        'calculate_rule_name': "UI-计算参数方案" + str(random_massage['number(1-400)']),
+        'interest_allowance_name': "UI-贴息管理方案" + str(random_massage['number(1-400)']),
+        'limit_name': "UI-额度管理方案" + str(random_massage['number(1-400)']),
         'product_name': test_add_new_product['productName'],
     }
     return details

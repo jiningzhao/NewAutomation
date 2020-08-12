@@ -2,7 +2,6 @@ import pytest
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-import time
 
 
 class TestPythonOrgSearch:
@@ -48,7 +47,7 @@ class TestPythonOrgSearch:
 
         # 输入服务名称
         self.wait_element_clicked(driver, xpath_str="/html/body/div[4]/div[1]/div[1]/ul/li[1]")
-        time.sleep(3)
+        # time.sleep(3)
         driver.find_element_by_xpath("//*/form/div[1]/div/div/div[2]/div/div[1]/input").send_keys(
             test_add_new_product['productName'])
 
@@ -59,7 +58,8 @@ class TestPythonOrgSearch:
         self.wait_element_clicked(driver, xpath_str="/html/body/div[4]/div[1]/div[1]/ul/li[1]")
 
         # 如果这样写会定位错，定位成新投资mq3,不知道为什么
-        driver.find_element_by_xpath("//span[contains(text(),\'{}\')]".format(test_add_new_product['productName'])).click()
+        driver.find_element_by_xpath(
+            "//span[contains(text(),\'{}\')]".format(test_add_new_product['productName'])).click()
 
         # 点击预约额度
         self.wait_element_clicked(driver, xpath_str='//*[@id="pane-0"]/form/div[2]/div/div/div[2]/div/input')
@@ -98,7 +98,7 @@ class TestPythonOrgSearch:
         # 点击确定
         self.wait_element_clicked(driver, xpath_str="//section[contains(text(),'确定')]")
         driver.find_element_by_xpath("//section[contains(text(),'确定')]").click()
-        time.sleep(5)
+        # time.sleep(5)
 
     @staticmethod
     def wait_element_visable(driver, classname=None, xpath_str=None):
