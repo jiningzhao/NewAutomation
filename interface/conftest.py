@@ -1,3 +1,4 @@
+# coding=utf-8
 import pytest
 from faker import Faker
 # from DB_fixture.mysql_db import DB_fixture
