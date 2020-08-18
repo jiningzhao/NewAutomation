@@ -14,7 +14,6 @@ class TestSetPlm:
     def test_0(self, chrome_config):
         driver = chrome_config['driver']
         driver.maximize_window()
-        # driver.get("https://service-wbszdh.newbanker.cn/")
         driver.get("https://service-wbs321.newtamp.cn/")
         # 等待元素出现
         self.wait_element(driver, classname='el-input__inner')
