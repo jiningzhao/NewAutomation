@@ -532,4 +532,3 @@ class TestSetPlm:
 
 if __name__ == "__main__":
     pytest.main(['-v', '-s', '-m=smoke'])
-    # pytest.main(['-v', '-s', '-m=smoke0'])

@@ -110,7 +110,7 @@ def test_add_new_product(get_token, random_massage):
     information = {
         'name': 'npdc.producthandle.add',
         'data': {
-            "templateId": 57,  # 客户模版14，测试环境57
+            "templateId": 14,  # 客户模版14，测试环境57
             "objProductDtoList": [{
                 "objNo": "NPDC-TRUST-BASE-MESSAGE",
                 "info": {
@@ -167,7 +167,7 @@ def test_add_new_product(get_token, random_massage):
                     "riskLevelStr": "R1"
                 }
             }],
-            "categoryId": 1848  # 客户环境25，测试环境 1848
+            "categoryId": 25  # 客户环境25，测试环境 1848
         },
         'api': '/npdc-web/api',
         'method': 'post'
