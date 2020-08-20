@@ -4,6 +4,7 @@ from faker import Faker
 # from DB_fixture.mysql_db import DB_fixture
 from ..common.tools import DisposeData
 from selenium import webdriver
+import uuid
 
 
 @pytest.fixture(scope='session')
@@ -50,6 +51,7 @@ def random_massage(request):
         'number(1-2)': f.random_int(min=1, max=2),
         'number(300-400)': f.random_int(min=300, max=400),
         'number(1-400)': f.random_int(min=1, max=400),
+        'uuid': uuid.uuid1(),
         # 'number': request.param,
         'job': f.job()
     }
@@ -96,10 +98,10 @@ def chrome_config(test_add_new_product, random_massage):
     chrome_option.add_experimental_option("excludeSwitches", ['enable-automation'])
     details = {
         'driver': webdriver.Chrome(options=chrome_option),
-        'repayment_name': "UI-收益管理方案" + str(random_massage['number(1-400)']),
-        'calculate_rule_name': "UI-计算参数方案" + str(random_massage['number(1-400)']),
-        'interest_allowance_name': "UI-贴息管理方案" + str(random_massage['number(1-400)']),
-        'limit_name': "UI-额度管理方案" + str(random_massage['number(1-400)']),
+        'repayment_name': "UI-收益管理方案" + str(random_massage['uuid']),
+        'calculate_rule_name': "UI-计算参数方案" + str(random_massage['uuid']),
+        'interest_allowance_name': "UI-贴息管理方案" + str(random_massage['uuid']),
+        'limit_name': "UI-额度管理方案" + str(random_massage['uuid']),
         'product_name': test_add_new_product['productName'],
     }
     return details
@@ -114,7 +116,7 @@ def test_add_new_product(get_token, random_massage):
             "objProductDtoList": [{
                 "objNo": "NPDC-TRUST-BASE-MESSAGE",
                 "info": {
-                    "name": "接口自动化" + str(random_massage['number(1-400)']),
+                    "name": "接口自动化" + str(random_massage['uuid']),
                     "minBuyMoney": "",
                     "productDeadline": "",
                     "Issuer": "",

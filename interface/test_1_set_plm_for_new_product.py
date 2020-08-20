@@ -526,8 +526,8 @@ class TestSetPlm:
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
             print(e)
-        finally:
-            pass
+        # finally:
+        #     pass
 
 
 if __name__ == "__main__":
