@@ -525,7 +525,8 @@ class TestSetPlm:
                 wait.until(EC.element_to_be_clickable((By.XPATH, xpath_str)),
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
-            print(e)
+            assert 1 != 1, e
+
         # finally:
         #     pass
 
