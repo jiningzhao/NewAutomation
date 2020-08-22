@@ -532,4 +532,4 @@ class TestSetPlm:
 
 
 if __name__ == "__main__":
-    pytest.main(['-v', '-s', '-m=smoke', '--junitxml=test-report.xml'])
+    pytest.main(['-v', '-s', '-m=smoke'])
