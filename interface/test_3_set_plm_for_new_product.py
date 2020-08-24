@@ -7,191 +7,11 @@ import pytest
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-class TestSetPlm:
-
-    @pytest.mark.smoke
-    # 登陆并验证页面中存在运营中心菜单
-    def test_0(self, chrome_config):
-        driver = chrome_config['driver']
-        driver.maximize_window()
-        driver.get("https://service-wbs321.newtamp.cn/")
-        # 等待元素出现
-        self.wait_element(driver, classname='el-input__inner')
-        # 定位用户名输入框并输入手机号
-        elem = driver.find_element_by_xpath(
-            "/html/body/section/div[1]/div/div[2]/div/div/div[2]/form/div[1]/div/div/div/input")
-        elem.clear()
-        elem.send_keys("18888888888")
-        # 定位密码输入框并输入密码
-        elem = driver.find_element_by_xpath(
-            "/html/body/section/div[1]/div/div[2]/div/div/div[2]/form/div[2]/div/div/div[1]/input")
-        elem.clear()
-        elem.send_keys("a111111")
-        # 定位登陆按钮并点击
-        driver.find_element_by_xpath("/html/body/section/div[1]/div/div[2]/div/div/div[3]/button").click()
-        # 等待元素出现
-        self.wait_element(driver, classname='el-menu-item')
-        # assert "运营中心" in self.driver.page_source, "msg=页面不存在运营中心文案"
-
-    @pytest.mark.smoke
-    # 跳转到运营中心页面
-    def test_1(self, chrome_config):
-        driver = chrome_config['driver']
-        self.wait_element(driver, classname='el-menu-item')
-        # 定位元素位置并使用js点击，点击"运营中心"按钮跳转到运营中心页面
-        button = driver.find_element_by_xpath("//span[text()='运营中心']")
-        driver.execute_script("arguments[0].click()", button)
-        try:
-            driver.switch_to.window(driver.window_handles[-1])
-        except Exception as e:
-            print(e)
-        self.wait_element(driver, classname='el-menu-item')
-        # self.assertIn("服务运营管理", driver.page_source, "msg=跳转到运营中心页面超时！")
-
-    @pytest.mark.smoke
-    # 跳转到运营方案管理页面
-    def test_2(self, chrome_config):
-        driver = chrome_config['driver']
-        self.wait_element(driver, classname='el-menu-item')
-        button = driver.find_element_by_xpath("//li[contains(text(),'运营方案管理')]")
-        driver.execute_script("arguments[0].click()", button)
-
-        # self.assertIn("收益管理方案", driver.page_source, "msg=跳转到运营方案管理页面失败！")
-
-    @pytest.mark.smoke
-    # 新增收益管理方案
-    def test_3(self, chrome_config):
-        driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
-        # 点击新增方案入口
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
-        # 点击新增收益管理方案
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//li[contains(text(),'收益管理方案')]"))
-        self.wait_element(driver, 'el-input__inner')
-
-        # 输入方案名称
-        driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(chrome_config['repayment_name'])
-        # 选择回款方式
-        driver.find_element_by_xpath("//input[@placeholder='请选择回款方式']").click()
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//span[contains(text(),'一次性还本付息')]"))
-        # 选择起息方式
-        driver.find_element_by_xpath("//input[@placeholder='请选择起息方式']").click()
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//span[contains(text(),'指定日起息')]"))
-
-        # 选择期限类型
-        driver.find_element_by_xpath("//input[@placeholder='请选择期限类型']").click()
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//span[contains(text(),'指定到期日')]"))
-        # 点击保存
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
-
-        self.wait_element(driver, 'el-table__row')
-        driver.find_element_by_xpath('//*[@id="tab-1"]').click()
-        self.wait_element(driver, 'el-table__row')
-        # self.assertTrue(
-        #     driver.find_element_by_xpath("//a[contains(text(),{})]".format(chrome_config['repayment_name'])))
-
-    @pytest.mark.smoke
-    # 新增计算参数方案
-    def test_4(self, chrome_config):
-        driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
-        # 点击新增方案入口
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
-        # 点击新增计算参数方案
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//li[contains(text(),'计算参数方案')]"))
-        self.wait_element(driver, 'el-input__inner')
-        # 输入方案名称
-        driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(chrome_config['calculate_rule_name'])
-        # 选择计算计息天数
-        driver.find_element_by_xpath('//*[@id="pane-1"]/section/form/div[2]/div/div/div[2]/div/div[1]/input').click()
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//span[contains(text(),'ACT/365')]"))
-        # 选择小数舍入模式
-        driver.find_element_by_xpath('//*[@id="pane-1"]/section/form/div[3]/div/div/div[2]/div/div[1]/input').click()
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//span[contains(text(),'向下取整')]"))
-        # 点击保存
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
-
-        self.wait_element(driver, 'el-table__row')
-        driver.find_element_by_xpath('//*[@id="tab-4"]').click()
-        self.wait_element(driver, 'el-table__row')
-        # self.assertTrue(
-        #     driver.find_element_by_xpath("//a[contains(text(),{})]".format(chrome_config['calculate_rule_name'])))
-
-    @pytest.mark.smoke
-    # 新增额度管理方案
-    def test_4_0(self, chrome_config):
-        driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
-        # 点击新增方案入口
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
-        # 点击新增额度管理方案
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//li[contains(text(),'额度管理方案')]"))
-        self.wait_element(driver, 'el-input__inner')
-
-        # 输入方案名称
-        driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(chrome_config['limit_name'])
-
-        # 点击保存
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
-
-        self.wait_element(driver, 'el-table__row')
-        driver.find_element_by_xpath('//*[@id="tab-1"]').click()
-        self.wait_element(driver, 'el-table__row')
-
-    @pytest.mark.smoke
-    # 新增贴息管理方案
-    def test_4_1(self, chrome_config):
-        driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
-        # 点击新增方案入口
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
-        # 点击新增贴息管理方案
-        self.wait_element(driver, xpath_str="//li[contains(text(),'贴息管理方案')]")
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//li[contains(text(),'贴息管理方案')]"))
-        # 输入方案名称
-        self.wait_element(driver, xpath_str="//input[@placeholder='输入方案名称']")
-
-        driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(
-            chrome_config['interest_allowance_name'])
-
-        # 选择贴息起息方式
-        self.wait_element(driver, xpath_str="//input[@placeholder='请选择']")
-        driver.find_elements_by_xpath("//input[@placeholder='请选择']")[0].click()
-
-        self.wait_element(driver, xpath_str="//span[contains(text(),'指定起息日')]")
-
-        driver.find_element_by_xpath("//li/span[contains(text(),'指定起息日')]").click()
-
-        # 输入贴息到期日
-        self.wait_element(driver, xpath_str="//input[@placeholder='请选择']")
-        driver.find_elements_by_xpath("//input[@placeholder='请选择']")[1].click()
-        self.wait_element(driver, xpath_str="//span[contains(text(),'指定到期日')]")
-        driver.find_element_by_xpath("//li/span[contains(text(),'指定到期日')]").click()
-
-        # 清除readonly属性
-        self.wait_element(driver, xpath_str="//input[@placeholder='请选择']")
-
-        # 输入贴息发放时间
-        driver.find_elements_by_xpath("//input[@placeholder='请选择']")[2].click()
-        self.wait_element(driver, xpath_str="//span[contains(text(),'指定日发放')]")
-        driver.find_element_by_xpath("//li/span[contains(text(),'指定日发放')]").click()
-
-        self.wait_element(driver, xpath_str="//section[contains(text(),'保存')]")
-        # 点击保存
-        driver.find_element_by_xpath("//section[contains(text(),'保存')]").click()
-        time.sleep(10)
+class TestSetPlmForNewProduct:
 
     @pytest.mark.smoke
     # 跳转到服务运营管理页面
-    def test_5(self, chrome_config):
+    def test_0(self, chrome_config):
         driver = chrome_config['driver']
         self.wait_element(driver, classname='el-menu-item')
         button = driver.find_element_by_xpath("//li[contains(text(),'服务运营管理')]")
@@ -201,7 +21,7 @@ class TestSetPlm:
 
     @pytest.mark.smoke
     # 同步产品信息
-    def test_6(self, chrome_config):
+    def test_1(self, chrome_config):
         driver = chrome_config['driver']
         # 点击同步产品信息按钮
         driver.execute_script("arguments[0].click()",
@@ -214,7 +34,7 @@ class TestSetPlm:
         #     driver.find_element_by_xpath('//*[@id="pane-1"]/section/section[1]/div[2]/div[3]/table/tbody/tr'))
 
     @pytest.mark.smoke
-    def test_7(self, chrome_config):
+    def test_2(self, chrome_config):
         driver = chrome_config['driver']
         # 点击进入产品方案详情
         self.wait_element(driver, xpath_str="//a[contains(text(),\'{}\')]".format(chrome_config['product_name']))
@@ -226,7 +46,7 @@ class TestSetPlm:
                               driver.find_element_by_xpath("//section[contains(text(),'配置运营方案')]"))
 
     @pytest.mark.smoke
-    def test_8(self, chrome_config):
+    def test_3(self, chrome_config):
         driver = chrome_config['driver']
         # 点击收益管理方案输入框
         # self.assertIn('如果选择了“收益管理方案”或“贴息管理方案”，则必须选择“计算参数方案”', driver.page_source, msg="并非初始化页面！")
@@ -280,7 +100,7 @@ class TestSetPlm:
 
     @pytest.mark.smoke
     # 编辑收益管理方案
-    def test_9(self, chrome_config):
+    def test_4(self, chrome_config):
         driver = chrome_config['driver']
         # --------------------------点击编辑收益管理方案------------------------
         self.wait_element(driver, xpath_str='//*[@id="pane-1"]/section/section/section[1]/div[1]/div[2]/div/button')
@@ -328,7 +148,7 @@ class TestSetPlm:
         driver.find_element_by_xpath("//section[contains(text(),'保存')]").click()
 
     @pytest.mark.smoke
-    def test_9_0(self, chrome_config):
+    def test_5(self, chrome_config):
         driver = chrome_config['driver']
         ActionChains(driver).move_to_element(
             driver.find_element_by_xpath('//*/section/section')).perform()
@@ -465,7 +285,7 @@ class TestSetPlm:
 
     @pytest.mark.smoke
     # 编辑贴息管理方案
-    def test_9_1(self, chrome_config):
+    def test_6(self, chrome_config):
         driver = chrome_config['driver']
         # --------------------------点击编辑贴息管理方案------------------------
         # 鼠标悬停
@@ -530,7 +350,3 @@ class TestSetPlm:
 
         finally:
             pass
-
-
-if __name__ == "__main__":
-    pytest.main(['-v', '--tb=no', '-m=smoke', '--junitxml=test-report.xml'])

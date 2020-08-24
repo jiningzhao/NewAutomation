@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 class TestPythonOrgSearch:
     @pytest.mark.smoke
-    def test_99(self, chrome_config, test_add_new_product):
+    def test_0(self, chrome_config, test_add_new_product):
 
         driver = chrome_config['driver']
         try:
