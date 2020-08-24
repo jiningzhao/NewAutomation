@@ -533,5 +533,5 @@ class TestPlmMenu:
 
 
 if __name__ == "__main__":
-    # pytest.main(['-v', '--tb=no', '-m=smoke', '--junitxml=test-report.xml'])
-    pytest.main(['-v', '-s', '-m=smoke'])
+    pytest.main(['-v', '--tb=no', '-m=smoke', '--junitxml=test-report.xml'])
+    # pytest.main(['-v', '-s', '-m=smoke'])
