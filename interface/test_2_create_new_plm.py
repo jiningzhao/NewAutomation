@@ -103,10 +103,12 @@ class TestCreateNewPlm:
         driver = chrome_config['driver']
         self.wait_element(driver, 'el-menu-item')
         # 点击新增方案入口
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
+        driver.execute_script("arguments[0].click()",
+                              driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
         # 点击新增贴息管理方案
-        self.wait_element(driver, xpath_str="//li[contains(text(),'贴息管理方案')]")
-        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//li[contains(text(),'贴息管理方案')]"))
+        # self.wait_element(driver, xpath_str="//li[contains(text(),'贴息管理方案')]")
+        driver.execute_script("arguments[0].click()",
+                              driver.find_element_by_xpath("//li[contains(text(),'贴息管理方案')]"))
         # 输入方案名称
         self.wait_element(driver, xpath_str="//input[@placeholder='输入方案名称']")
 
