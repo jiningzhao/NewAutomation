@@ -4,7 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
 import pytest
-from selenium.webdriver.common.action_chains import ActionChains
 
 
 class TestCreateNewPlm:
@@ -36,6 +35,7 @@ class TestCreateNewPlm:
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//span[contains(text(),'指定到期日')]"))
         # 点击保存
+
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
 
         self.wait_element(driver, 'el-table__row')
@@ -154,7 +154,8 @@ class TestCreateNewPlm:
                 wait.until(EC.element_to_be_clickable((By.XPATH, xpath_str)),
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
-            # print(e)
+            driver.get_screenshot_as_file(
+                '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
             assert 1 != 1, e
 
         finally:

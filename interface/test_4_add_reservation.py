@@ -1,5 +1,6 @@
 # coding=utf-8
 import pytest
+import time
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -47,16 +48,17 @@ class TestPythonOrgSearch:
         driver.find_element_by_xpath("//*/form/div[1]/div/div/div[2]/div/div[1]/input").click()
 
         # 输入服务名称
-        self.wait_element_clicked(driver, xpath_str="/html/body/div[4]/div[1]/div[1]/ul/li[1]")
+        self.wait_element_clicked(driver, xpath_str="/html/body/div[3]/div[1]/div[1]/ul/li[1]")
+
         # time.sleep(3)
-        driver.find_element_by_xpath("//*/form/div[1]/div/div/div[2]/div/div[1]/input").send_keys(
+        driver.find_element_by_xpath('//*[@id="pane-0"]/form/div[1]/div/div/div[2]/div/div[1]/input').send_keys(
             test_add_new_product['productName'])
 
         # --------------------------------------------------------------------------------------------------------------
 
         # 点击服务
         # self.wait_element_clicked(driver,xpath_str="//span[contains(text(),{})]".format(test_add_new_product['productName']))
-        self.wait_element_clicked(driver, xpath_str="/html/body/div[4]/div[1]/div[1]/ul/li[1]")
+        # self.wait_element_clicked(driver, xpath_str="/html/body/div[3]/div[1]/div[1]/ul/li[1]")
 
         # 如果这样写会定位错，定位成新投资mq3,不知道为什么
         driver.find_element_by_xpath(
@@ -110,7 +112,9 @@ class TestPythonOrgSearch:
             elif xpath_str is not None:
                 wait.until(EC.visibility_of_any_elements_located((By.XPATH, xpath_str)))
         except Exception as e:
-            print(e)
+            driver.get_screenshot_as_file(
+                '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            assert 1 != 1, e
         finally:
             pass
 
@@ -123,6 +127,8 @@ class TestPythonOrgSearch:
             elif xpath_str is not None:
                 wait.until(EC.element_to_be_clickable((By.XPATH, xpath_str)))
         except Exception as e:
-            print(e)
+            driver.get_screenshot_as_file(
+                '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            assert 1 != 1, e
         finally:
             pass

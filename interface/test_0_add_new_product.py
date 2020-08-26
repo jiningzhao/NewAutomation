@@ -6,10 +6,10 @@ from ..common.tools import DisposeData
 # from multiprocessing import Process
 
 
-class TestAddNewProductProcess:
+class TestPutawayNewProduct:
     @pytest.mark.smoke
     @pytest.mark.smoke0
-    def test_add_new_product(self, get_token, test_add_new_product):
+    def test_putaway_new_product(self, get_token, test_add_new_product):
         information = {
             'name': 'npdc.product.shelf',
             'data': {
