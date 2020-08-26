@@ -48,6 +48,8 @@ class TestPlmMenu:
         driver.execute_script("arguments[0].click()", button)
         driver.switch_to.window(driver.window_handles[-1])
         self.wait_element(driver, classname='el-menu-item')
+        driver.get_screenshot_as_file(
+            '../dir_screenshot/{}.png'.format("测试" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
         # self.assertIn("服务运营管理", driver.page_source, "msg=跳转到运营中心页面超时！")
 
     @pytest.mark.smoke
