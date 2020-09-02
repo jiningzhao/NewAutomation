@@ -2,7 +2,6 @@ import os
 import configparser as cparser
 
 
-
 class Conf:
     def __init__(self):
         # 定位当前脚本所在位置的上级
@@ -21,5 +20,13 @@ class Conf:
         url = self.cf.get("url", "url")
         app_key = self.cf.get('url', 'app_key')
         secret = self.cf.get('url', 'secret')
+        entid = self.cf.get('url', 'entId')
 
-        return url, app_key, secret
+        result = {'url': url, 'app_key': app_key, 'secret': secret, 'entId': entid}
+        return result
+
+    def product_conf(self):
+        templateid = self.cf.get("product", "templateId")
+        categoryid = self.cf.get("product", "categoryId")
+        result = {'templateId': templateid, 'categoryId': categoryid}
+        return result

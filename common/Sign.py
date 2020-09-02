@@ -16,7 +16,8 @@ class Sign:
     def __init__(self, param):
 
         # 1.拿到secret的值，用来生成sign签名
-        self.url, self.app_key, self.secret = Conf().api_conf()
+        self.url, self.app_key, self.secret = Conf().api_conf().get('url'), Conf().api_conf().get(
+            'app_key'), Conf().api_conf().get('secret')
 
         # 2.对入参进行处理
         self.param = self.param_fix(param)

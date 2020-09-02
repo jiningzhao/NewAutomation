@@ -3,6 +3,7 @@ import pytest
 from faker import Faker
 # from DB_fixture.mysql_db import DB_fixture
 from ..common.tools import DisposeData
+from ..config.config import Conf
 from selenium import webdriver
 import uuid
 
@@ -112,7 +113,7 @@ def test_add_new_product(get_token, random_massage):
     information = {
         'name': 'npdc.producthandle.add',
         'data': {
-            "templateId": 14,  # 客户模版14，测试环境57, 新租户14
+            "templateId": Conf().product_conf().get('templateId'),  # 客户模版14，测试环境57, 新租户14
             "objProductDtoList": [{
                 "objNo": "NPDC-TRUST-BASE-MESSAGE",
                 "info": {
@@ -169,7 +170,7 @@ def test_add_new_product(get_token, random_massage):
                     "riskLevelStr": "R1"
                 }
             }],
-            "categoryId": 7  # 客户环境25，测试环境 1848 ， 新租户7
+            "categoryId": Conf().product_conf().get('categoryId')  # 客户环境25，测试环境 1848 ， 新租户7
         },
         'api': '/npdc-web/api',
         'method': 'post'

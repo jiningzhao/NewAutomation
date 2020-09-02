@@ -14,19 +14,20 @@ class TestPythonOrgSearch:
         try:
             driver.switch_to.window(driver.window_handles[0])
         except Exception as e:
-            print(e)
+            assert 1 != 1, e
         # 点击预约管理
         self.wait_element_visable(driver, 'el-menu-item')
         # 直接使用js注入的方法进行元素的定位,因为需要选择
-        button = driver.find_element_by_xpath("/html/body/div[1]/section/div[1]/div[1]/div[1]/nav/ul/li[8]/ul/li[1]")
+        button = driver.find_element_by_xpath("//li[contains(text(),'投资预约单')]")
+
         driver.execute_script("arguments[0].click()", button)
 
         # 点击新增预约单按钮
         self.wait_element_visable(driver,
-                                  xpath_str='//*[@id="nb-scroll-content"]/section/div[1]/div[1]/div/div[1]/section/div[1]/span')
+                                  xpath_str='//div[contains(text(),"新增预约单")]')
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath(
-                                  '//*[@id="nb-scroll-content"]/section/div[1]/div[1]/div/div[1]/section/div[1]/span'))
+                                  '//div[contains(text(),"新增预约单")]'))
 
         # 选择客户
         self.wait_element_visable(driver, xpath_str='//*[@id="pane-0"]/form/div[4]/div/div/div[2]/button/span')
@@ -113,7 +114,8 @@ class TestPythonOrgSearch:
                 wait.until(EC.visibility_of_any_elements_located((By.XPATH, xpath_str)))
         except Exception as e:
             driver.get_screenshot_as_file(
-                '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+                '../dir_screenshot/{}.png'.format(
+                    "xpath路径{}异常".format(xpath_str) + time.strftime("%Y%m%d%H%M%S", time.localtime())))
             assert 1 != 1, e
         finally:
             pass
@@ -128,7 +130,8 @@ class TestPythonOrgSearch:
                 wait.until(EC.element_to_be_clickable((By.XPATH, xpath_str)))
         except Exception as e:
             driver.get_screenshot_as_file(
-                '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+                '../dir_screenshot/{}.png'.format(
+                    "xpath路径{}异常".format(xpath_str) + time.strftime("%Y%m%d%H%M%S", time.localtime())))
             assert 1 != 1, e
         finally:
             pass

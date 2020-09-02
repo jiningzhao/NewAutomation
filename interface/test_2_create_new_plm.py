@@ -4,6 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
 import pytest
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 
 
 class TestCreateNewPlm:
@@ -12,12 +14,12 @@ class TestCreateNewPlm:
     # 新增收益管理方案
     def test_0(self, chrome_config):
         driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
+        self.wait_element_clickable(driver, 'el-menu-item')
         # 点击新增方案入口
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
         # 点击新增收益管理方案
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//li[contains(text(),'收益管理方案')]"))
-        self.wait_element(driver, 'el-input__inner')
+        self.wait_element_clickable(driver, 'el-input__inner')
 
         # 输入方案名称
         driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(chrome_config['repayment_name'])
@@ -35,25 +37,25 @@ class TestCreateNewPlm:
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//span[contains(text(),'指定到期日')]"))
         # 点击保存
-
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
-
-        self.wait_element(driver, 'el-table__row')
-        driver.find_element_by_xpath('//*[@id="tab-1"]').click()
-        self.wait_element(driver, 'el-table__row')
-        # self.assertTrue(
-        #     driver.find_element_by_xpath("//a[contains(text(),{})]".format(chrome_config['repayment_name'])))
+        # 等待列表
+        self.wait_element_clickable(driver, 'el-table__row')
+        # 点击收益管理方案tab
+        driver.find_element_by_xpath("//div[contains(text(),'收益管理方案')]").click()
+        self.wait_element_clickable(driver, 'el-table__row')
+        self.name_assert(driver, chrome_config['repayment_name'])
+        time.sleep(10)
 
     @pytest.mark.smoke
     # 新增计算参数方案
     def test_1(self, chrome_config):
         driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
+        self.wait_element_clickable(driver, 'el-menu-item')
         # 点击新增方案入口
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
         # 点击新增计算参数方案
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//li[contains(text(),'计算参数方案')]"))
-        self.wait_element(driver, 'el-input__inner')
+        self.wait_element_clickable(driver, 'el-input__inner')
         # 输入方案名称
         driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(chrome_config['calculate_rule_name'])
         # 选择计算计息天数
@@ -66,25 +68,26 @@ class TestCreateNewPlm:
                               driver.find_element_by_xpath("//span[contains(text(),'向下取整')]"))
         # 点击保存
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
-
-        self.wait_element(driver, 'el-table__row')
-        driver.find_element_by_xpath('//*[@id="tab-4"]').click()
-        self.wait_element(driver, 'el-table__row')
-        # self.assertTrue(
-        #     driver.find_element_by_xpath("//a[contains(text(),{})]".format(chrome_config['calculate_rule_name'])))
+        # driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'返回')]"))
+        # 等待列表刷新
+        self.wait_element_clickable(driver, 'el-table__row')
+        # 点击计算参数方案tab
+        driver.find_element_by_xpath("//div[contains(text(),'计算参数方案')]").click()
+        self.wait_element_clickable(driver, 'el-table__row')
+        self.name_assert(driver, name=chrome_config['calculate_rule_name'])
 
     @pytest.mark.smoke
     # 新增额度管理方案
     def test_2(self, chrome_config):
         driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
+        self.wait_element_clickable(driver, 'el-menu-item')
         # 点击新增方案入口
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
         # 点击新增额度管理方案
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//li[contains(text(),'额度管理方案')]"))
-        self.wait_element(driver, 'el-input__inner')
+        self.wait_element_clickable(driver, 'el-input__inner')
 
         # 输入方案名称
         driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(chrome_config['limit_name'])
@@ -93,15 +96,17 @@ class TestCreateNewPlm:
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
 
-        self.wait_element(driver, 'el-table__row')
-        driver.find_element_by_xpath('//*[@id="tab-1"]').click()
-        self.wait_element(driver, 'el-table__row')
+        self.wait_element_clickable(driver, 'el-table__row')
+        # 点击额度管理方案tab
+        driver.find_element_by_xpath("//div[contains(text(),'额度管理方案')]").click()
+        self.wait_element_clickable(driver, 'el-table__row')
+        self.name_assert(driver, name=chrome_config['limit_name'])
 
     @pytest.mark.smoke
     # 新增贴息管理方案
     def test_3(self, chrome_config):
         driver = chrome_config['driver']
-        self.wait_element(driver, 'el-menu-item')
+        self.wait_element_clickable(driver, 'el-menu-item')
         # 点击新增方案入口
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//span[contains(text(),'新增方案')]"))
@@ -110,47 +115,50 @@ class TestCreateNewPlm:
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//li[contains(text(),'贴息管理方案')]"))
         # 输入方案名称
-        self.wait_element(driver, xpath_str="//input[@placeholder='输入方案名称']")
+        self.wait_element_clickable(driver, xpath_str="//input[@placeholder='输入方案名称']")
 
         driver.find_element_by_xpath("//input[@placeholder='输入方案名称']").send_keys(
             chrome_config['interest_allowance_name'])
 
         # 选择贴息起息方式
-        self.wait_element(driver, xpath_str="//input[@placeholder='请选择']")
+        self.wait_element_clickable(driver, xpath_str="//input[@placeholder='请选择']")
         driver.find_elements_by_xpath("//input[@placeholder='请选择']")[0].click()
 
-        self.wait_element(driver, xpath_str="//span[contains(text(),'指定起息日')]")
+        self.wait_element_clickable(driver, xpath_str="//span[contains(text(),'指定起息日')]")
 
         driver.find_element_by_xpath("//li/span[contains(text(),'指定起息日')]").click()
 
         # 输入贴息到期日
-        self.wait_element(driver, xpath_str="//input[@placeholder='请选择']")
+        self.wait_element_clickable(driver, xpath_str="//input[@placeholder='请选择']")
         driver.find_elements_by_xpath("//input[@placeholder='请选择']")[1].click()
-        self.wait_element(driver, xpath_str="//span[contains(text(),'指定到期日')]")
+        self.wait_element_clickable(driver, xpath_str="//span[contains(text(),'指定到期日')]")
         driver.find_element_by_xpath("//li/span[contains(text(),'指定到期日')]").click()
 
         # 清除readonly属性
-        self.wait_element(driver, xpath_str="//input[@placeholder='请选择']")
+        self.wait_element_clickable(driver, xpath_str="//input[@placeholder='请选择']")
 
         # 输入贴息发放时间
         driver.find_elements_by_xpath("//input[@placeholder='请选择']")[2].click()
-        self.wait_element(driver, xpath_str="//span[contains(text(),'指定日发放')]")
+        self.wait_element_clickable(driver, xpath_str="//span[contains(text(),'指定日发放')]")
         driver.find_element_by_xpath("//li/span[contains(text(),'指定日发放')]").click()
 
-        self.wait_element(driver, xpath_str="//section[contains(text(),'保存')]")
+        self.wait_element_clickable(driver, xpath_str="//section[contains(text(),'保存')]")
         # 点击保存
         driver.find_element_by_xpath("//section[contains(text(),'保存')]").click()
-        time.sleep(10)
+        self.wait_element_clickable(driver, 'el-table__row')
+        # 点击贴息管理方案tab
+        driver.find_element_by_xpath("//div[contains(text(),'贴息管理方案')]").click()
+        self.wait_element_clickable(driver, 'el-table__row')
+        self.name_assert(driver, name=chrome_config['interest_allowance_name'])
 
     @staticmethod
-    def wait_element(driver, classname=None, xpath_str=None):
+    def wait_element_clickable(driver, classname=None, xpath_str=None):
         try:
             wait = WebDriverWait(driver, 10)
             if classname is not None:
                 wait.until(EC.element_to_be_clickable((By.CLASS_NAME, classname)),
                            message="超时！/等待class元素:{}失败！".format(classname))
             elif xpath_str is not None:
-                # wait.until(EC.visibility_of_any_elements_located((By.XPATH, xpath_str)),
                 wait.until(EC.element_to_be_clickable((By.XPATH, xpath_str)),
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
@@ -158,5 +166,38 @@ class TestCreateNewPlm:
                 '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
             assert 1 != 1, e
 
+        finally:
+            pass
+
+    @staticmethod
+    def wait_element_visibility(driver, classname=None, xpath_str=None):
+        try:
+            wait = WebDriverWait(driver, 10)
+            if classname is not None:
+                wait.until(EC.element_to_be_clickable((By.CLASS_NAME, classname)),
+                           message="超时！/等待class元素:{}失败！".format(classname))
+            elif xpath_str is not None:
+                wait.until(EC.visibility_of_any_elements_located((By.XPATH, xpath_str)),
+                           message="超时！/等待xpath路径:{}失败！".format(xpath_str))
+        except Exception as e:
+            driver.get_screenshot_as_file(
+                '../dir_screenshot/{}.png'.format(
+                    "xpath路径{}未找到".format(xpath_str) + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            assert 1 != 1, e
+
+        finally:
+            pass
+
+    @staticmethod
+    def name_assert(driver, name):
+        try:
+            WebDriverWait(driver, 10).until(
+                EC.visibility_of_any_elements_located((By.XPATH, '//p[contains(text(),"操作成功")]')),
+                message="定位【操作成功】文案失败！")
+        except Exception as e:
+            driver.get_screenshot_as_file(
+                '../dir_screenshot/{}.png'.format(
+                    name + "{}".format(e)))
+            assert 1 != 1, e
         finally:
             pass

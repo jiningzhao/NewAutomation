@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 import time
 import pytest
 from selenium.common.exceptions import NoSuchElementException
+# from ..config.config import Conf
+from config.config import Conf
 
 
 class TestPlmMenu:
@@ -14,7 +16,7 @@ class TestPlmMenu:
     def test_0(self, chrome_config):
         driver = chrome_config['driver']
         driver.maximize_window()
-        driver.get("https://service-wbs321.newtamp.cn/")
+        driver.get(Conf().api_conf().get('url'))
         # 等待元素出现
         self.wait_element(driver, classname='el-input__inner')
         # 定位用户名输入框并输入手机号
@@ -27,8 +29,8 @@ class TestPlmMenu:
             "/html/body/section/div[1]/div/div[2]/div/div/div[2]/form/div[2]/div/div/div[1]/input")
         elem.clear()
         elem.send_keys("a111111")
-        # 定位登陆按钮并点击
-        driver.find_element_by_xpath("/html/body/section/div[1]/div/div[2]/div/div/div[3]/button").click()
+        # 定位登录按钮并点击
+        driver.find_element_by_xpath("//span[contains(text(),'登录')]").click()
         # 等待元素出现
         self.wait_element(driver, classname='el-menu-item')
         # assert "运营中心" in self.driver.page_source, "msg=页面不存在运营中心文案"
@@ -48,8 +50,8 @@ class TestPlmMenu:
         driver.execute_script("arguments[0].click()", button)
         driver.switch_to.window(driver.window_handles[-1])
         self.wait_element(driver, classname='el-menu-item')
-        driver.get_screenshot_as_file(
-            '../dir_screenshot/{}.png'.format("测试" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+        # driver.get_screenshot_as_file(
+        #     '../dir_screenshot/{}.png'.format("测试" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
         # self.assertIn("服务运营管理", driver.page_source, "msg=跳转到运营中心页面超时！")
 
     @pytest.mark.smoke
@@ -81,5 +83,5 @@ class TestPlmMenu:
 
 
 if __name__ == "__main__":
-    pytest.main(['-v', '--tb=line', '-m=smoke', '--junitxml=test-report.xml'])
-    # pytest.main(['-v', '-s', '-m=smoke'])
+    # pytest.main(['-v', '--tb=line', '-m=smoke', '--junitxml=test-report.xml'])
+    pytest.main(['-v', '-s', '-m=smoke'])
