@@ -23,11 +23,10 @@ class TestPythonOrgSearch:
         driver.execute_script("arguments[0].click()", button)
 
         # 点击新增预约单按钮
-        self.wait_element_visable(driver,
-                                  xpath_str='//div[contains(text(),"新增预约单")]')
-        driver.execute_script("arguments[0].click()",
-                              driver.find_element_by_xpath(
-                                  '//div[contains(text(),"新增预约单")]'))
+        add_reservation = driver.find_element_by_xpath('//div[contains(text(),"新增预约单")]')
+        # self.wait_element_visable(driver,
+        #                           xpath_str='//div[contains(text(),"新增预约单")]')
+        driver.execute_script("arguments[0].click()", add_reservation)
 
         # 选择客户
         self.wait_element_visable(driver, xpath_str='//*[@id="pane-0"]/form/div[4]/div/div/div[2]/button/span')
