@@ -1,17 +1,14 @@
 """
 封装断言
 """
-from DB_fixture.mysql_db import DB
 
 
 class Assert:
-    def __init__(self, assert_type, real, expect, detail=None, db_table=None):
+    def __init__(self, assert_type, real, expect, detail=None):
         if assert_type == 'equal':
             self.equal(real, expect, detail)
         elif assert_type == 'notEqual':
             self.not_equal(real, expect, detail)
-        elif assert_type == 'IN':
-            self._in(real, expect, detail, db_table)
         elif assert_type == 'notIN':
             self.not_in(real, expect, detail)
         elif assert_type == 'cover':
@@ -30,14 +27,6 @@ class Assert:
     def not_equal(real, expect, detail):
 
         assert expect != real, detail
-
-    @staticmethod
-    def _in(real, expect, detail, db_table):
-
-        expect_1 = DB(db_table[0]).select(db_table[1], expect, real)
-        real_1 = {expect: real}
-
-        assert real_1 in expect_1, detail
 
     @staticmethod
     def not_in(real, expect, detail):
