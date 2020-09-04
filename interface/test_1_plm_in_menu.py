@@ -5,8 +5,8 @@ from selenium.webdriver.common.by import By
 import time
 import pytest
 from selenium.common.exceptions import NoSuchElementException
-from ..config.config import Conf
-# from config.config import Conf
+# from ..config.config import Conf
+from config.config import Conf
 
 
 class TestPlmMenu:
@@ -83,5 +83,5 @@ class TestPlmMenu:
 
 
 if __name__ == "__main__":
-    # pytest.main(['-v', '--tb=line', '-m=smoke', '--junitxml=test-report.xml'])
-    pytest.main(['-v', '-s', '-m=smoke'])
+    pytest.main(['-v', '--tb=line', '-m=smoke', '--junitxml=test-report.xml'])
+    # pytest.main(['-v', '-s', '-m=smoke'])

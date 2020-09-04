@@ -2,8 +2,10 @@
 import pytest
 from faker import Faker
 # from DB_fixture.mysql_db import DB_fixture
-from ..common.tools import DisposeData
-from ..config.config import Conf
+# from ..common.tools import DisposeData
+from common.tools import DisposeData
+# from ..config.config import Conf
+from config.config import Conf
 from selenium import webdriver
 import uuid
 
