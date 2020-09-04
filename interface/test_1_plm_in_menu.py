@@ -5,8 +5,8 @@ from selenium.webdriver.common.by import By
 import time
 import pytest
 from selenium.common.exceptions import NoSuchElementException
-# from ..config.config import Conf
-from config.config import Conf
+from ..config.config import Conf
+# from config.config import Conf
 
 
 class TestPlmMenu:
