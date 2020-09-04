@@ -23,11 +23,11 @@ class TestPythonOrgSearch:
         driver.execute_script("arguments[0].click()", button)
 
         # 点击新增预约单按钮
-        add_reservation = driver.find_element_by_xpath('//div[contains(text(),"新增预约单")]')
-        # self.wait_element_visable(driver,
-        #                           xpath_str='//div[contains(text(),"新增预约单")]')
-        driver.execute_script("arguments[0].click()", add_reservation)
+        self.wait_element_visable(driver,
+                                  xpath_str='//div[contains(text(),"新增预约单")]')
+        driver.execute_script("arguments[0].click()", driver.find_element_by_xpath('//div[contains(text(),"新增预约单")]'))
 
+        time.sleep(2)
         # 选择客户
         self.wait_element_visable(driver, xpath_str='//*[@id="pane-0"]/form/div[4]/div/div/div[2]/button/span')
         driver.find_element_by_xpath("//*/form/div[4]/div/div/div[2]/button/span").click()
@@ -114,7 +114,7 @@ class TestPythonOrgSearch:
         except Exception as e:
             driver.get_screenshot_as_file(
                 '../dir_screenshot/{}.png'.format(
-                    "xpath路径{}异常".format(xpath_str) + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+                    "xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
             assert 1 != 1, e
         finally:
             pass
@@ -130,7 +130,7 @@ class TestPythonOrgSearch:
         except Exception as e:
             driver.get_screenshot_as_file(
                 '../dir_screenshot/{}.png'.format(
-                    "xpath路径{}异常".format(xpath_str) + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+                    "xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
             assert 1 != 1, e
         finally:
             pass
