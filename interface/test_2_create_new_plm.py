@@ -162,8 +162,12 @@ class TestCreateNewPlm:
                 wait.until(EC.element_to_be_clickable((By.XPATH, xpath_str)),
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
-            driver.get_screenshot_as_file(
-                '../dir_screenshot/{}.png'.format("xpath路径异常" + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            if classname is not None:
+                driver.get_screenshot_as_file(
+                    '../dir_screenshot/{}.png'.format("{}_timeout".format(classname)))
+            else:
+                driver.get_screenshot_as_file(
+                    '../dir_screenshot/{}.png'.format("{}_timeout".format(xpath_str.split("/")[-1])))
             assert 1 != 1, e
 
         finally:
@@ -180,9 +184,12 @@ class TestCreateNewPlm:
                 wait.until(EC.visibility_of_any_elements_located((By.XPATH, xpath_str)),
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
-            driver.get_screenshot_as_file(
-                '../dir_screenshot/{}.png'.format(
-                    "xpath路径{}未找到".format(xpath_str) + time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            if classname is not None:
+                driver.get_screenshot_as_file(
+                    '../dir_screenshot/{}.png'.format("{}_timeout".format(classname)))
+            else:
+                driver.get_screenshot_as_file(
+                    '../dir_screenshot/{}.png'.format("{}_timeout".format(xpath_str.split("/")[-1])))
             assert 1 != 1, e
 
         finally:
