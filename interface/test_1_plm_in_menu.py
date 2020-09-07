@@ -6,6 +6,8 @@ import time
 import pytest
 from selenium.common.exceptions import NoSuchElementException
 from ..config.config import Conf
+
+
 # from config.config import Conf
 
 
@@ -60,7 +62,12 @@ class TestPlmMenu:
         driver = chrome_config['driver']
         self.wait_element(driver, classname='el-menu-item')
         button = driver.find_element_by_xpath("//li[contains(text(),'运营方案管理')]")
-        driver.execute_script("arguments[0].click()", button)
+        try:
+            driver.execute_script("arguments[0].click()", button)
+        except Exception as e:
+            assert 1 != 1, e
+        finally:
+            pass
 
     @staticmethod
     def wait_element(driver, classname=None, xpath_str=None):
