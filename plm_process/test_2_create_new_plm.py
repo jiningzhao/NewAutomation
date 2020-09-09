@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import pytest
+import time
 
 
 class TestCreateNewPlm:
@@ -36,12 +37,12 @@ class TestCreateNewPlm:
         # 点击保存
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
         # 等待列表
-        # self.wait_element_clickable(driver, png_name="等待列表加载", classname='el-table__row')
+        self.wait_element_clickable(driver, png_name="等待列表加载", classname='el-table__row')
         # # 点击收益管理方案tab
         # driver.find_element_by_xpath("//div[contains(text(),'收益管理方案')]").click()
         # self.wait_element_clickable(driver,png_name="",classname='el-table__row')
         # self.name_assert(driver, chrome_config['repayment_name'])
-        # time.sleep(10)
+        time.sleep(3)
 
     @pytest.mark.smoke
     # 新增计算参数方案
@@ -67,7 +68,7 @@ class TestCreateNewPlm:
         driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
         # driver.execute_script("arguments[0].click()", driver.find_element_by_xpath("//section[contains(text(),'返回')]"))
         # 等待列表刷新
-        # self.wait_element_clickable(driver, png_name="等待列表加载", classname='el-table__row')
+        self.wait_element_clickable(driver, png_name="等待列表加载", classname='el-table__row')
         # 点击计算参数方案tab
         # driver.find_element_by_xpath("//div[contains(text(),'计算参数方案')]").click()
         # self.wait_element_clickable(driver, 'el-table__row')
@@ -92,6 +93,8 @@ class TestCreateNewPlm:
         # 点击保存
         driver.execute_script("arguments[0].click()",
                               driver.find_element_by_xpath("//section[contains(text(),'保存')]"))
+        # 等待列表刷新
+        self.wait_element_clickable(driver, png_name="等待列表加载", classname='el-table__row')
 
         # self.wait_element_clickable(driver, 'el-table__row')
         # 点击额度管理方案tab
@@ -142,6 +145,8 @@ class TestCreateNewPlm:
         self.wait_element_clickable(driver, png_name="贴息管理方案-保存", xpath_str="//section[contains(text(),'保存')]")
         # 点击保存
         driver.find_element_by_xpath("//section[contains(text(),'保存')]").click()
+        # 等待列表刷新
+        self.wait_element_clickable(driver, png_name="等待列表加载", classname='el-table__row')
         # self.wait_element_clickable(driver, 'el-table__row')
         # # 点击贴息管理方案tab
         # driver.find_element_by_xpath("//div[contains(text(),'贴息管理方案')]").click()
