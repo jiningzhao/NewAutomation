@@ -147,7 +147,7 @@ class TestSetPlmForNewProduct:
         driver.execute_script('arguments[0].removeAttribute("readonly")',
                               driver.find_element_by_xpath("//input[@placeholder='请选择指定起息日']"))
         driver.find_element_by_xpath("//input[@placeholder='请选择指定起息日']").send_keys('2020-08-01')
-        driver.find_element_by_xpath("//div[contains(text(),'运营详情')]").click()
+        driver.find_element_by_xpath("//span[contains(text(),'服务运营管理')]").click()
         # 从这开始没有在页面中，需要下拉滚动条
         self.wait_element(driver, png_name="保存按钮", xpath_str="//section[contains(text(),'保存')]")
         driver.execute_script("arguments[0].scrollIntoView(false);",
@@ -158,7 +158,7 @@ class TestSetPlmForNewProduct:
         driver.execute_script('arguments[0].removeAttribute("readonly")',
                               driver.find_element_by_xpath("//input[@placeholder='请选择指定到期日']"))
         driver.find_element_by_xpath("//input[@placeholder='请选择指定到期日']").send_keys('2020-08-31')
-        driver.find_element_by_xpath("//div[contains(text(),'运营详情')]").click()
+        driver.find_element_by_xpath("//span[contains(text(),'服务运营管理')]").click()
         # --------------------------点击保存------------------------
         self.wait_element_clickable(driver, png_name="保存按钮", xpath_str="//section[contains(text(),'保存')]")
         driver.find_element_by_xpath("//section[contains(text(),'保存')]").click()
@@ -338,6 +338,7 @@ class TestSetPlmForNewProduct:
                               driver.find_element_by_xpath("//input[@placeholder='请选择贴息指定起息日']"))
 
         driver.find_element_by_xpath("//input[@placeholder='请选择贴息指定起息日']").send_keys('2020-08-01')
+        driver.find_element_by_xpath("//span[contains(text(),'服务运营管理')]").click()
 
         # --------------------------输入贴息到期日------------------------
         self.wait_element(driver, png_name="贴息到期日", xpath_str="//input[@placeholder='请选择贴息指定到期日']")
@@ -345,11 +346,13 @@ class TestSetPlmForNewProduct:
         driver.execute_script('arguments[0].removeAttribute("readonly")',
                               driver.find_element_by_xpath("//input[@placeholder='请选择贴息指定到期日']"))
         driver.find_element_by_xpath("//input[@placeholder='请选择贴息指定到期日']").send_keys('2020-08-31')
+        driver.find_element_by_xpath("//span[contains(text(),'服务运营管理')]").click()
         # --------------------------输入贴息指定发放时间------------------------
         self.wait_element(driver, png_name="贴息指定发放时间", xpath_str="//input[@placeholder='请选择贴息指定发放时间']")
         driver.execute_script('arguments[0].removeAttribute("readonly")',
                               driver.find_element_by_xpath("//input[@placeholder='请选择贴息指定发放时间']"))
         driver.find_element_by_xpath("//input[@placeholder='请选择贴息指定发放时间']").send_keys('2020-08-31')
+        driver.find_element_by_xpath("//span[contains(text(),'服务运营管理')]").click()
 
         # --------------------------点击保存------------------------
         self.wait_element_clickable(driver, png_name="保存", xpath_str="//section[contains(text(),'保存')]")
