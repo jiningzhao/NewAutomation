@@ -105,7 +105,7 @@ class TestAddNewActivity:
         wait_element_clickable(driver, png_name="验证市场活动添加成功",
                                xpath_str="//a[contains(text(),\'{}\')]".format("活动" + str(random_massage.get("uuid"))))
 
-    @pytest.fixture()
+    @pytest.fixture(scope='session')
     def activity_no(self, chrome_config, random_massage):
         driver = chrome_config['driver']
         driver.find_element_by_xpath(
@@ -138,16 +138,22 @@ class TestAddNewActivity:
         driver.find_element_by_xpath("//section[contains(text(),'返回')]").click()
         time.sleep(3)
 
-    @pytest.mark.smoke
-    def test_5(self, ui_token, random_massage):
+    @pytest.fixture(scope='session')
+    def fs_upload(self, ui_token):
         information = {
             'name': 'fs.auth.upload.access.upload.token',
             'data': {
                 "isPubRead": 1,
-                "filename": "1587695841112140.mp4"
+                "filename": "vedio/1587695841112140.mp4"
             },
             'api': 'fs-upload',
             'method': 'post'
         }
 
-        DisposeData(information, ui_token).response_()
+        result = DisposeData(information, ui_token).response_()
+        return result
+
+    # @pytest.mark.smoke
+    # def test_6(self, fs_upload, ui_token):
+    #     url = "https://nbcc-input.oss-cn-beijing.aliyuncs.com/"
+    #
