@@ -42,5 +42,7 @@ class ApiCall(Sign):
             response = requests.get(self.url + api, params=param, headers=header)
 
         result = response.json()
+        # print(param)
+        # print(result)
 
         return result

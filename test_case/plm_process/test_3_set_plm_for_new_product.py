@@ -372,7 +372,7 @@ class TestSetPlmForNewProduct:
                 #            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
             driver.get_screenshot_as_file(
-                '../dir_screenshot/{}.png'.format(png_name))
+                '../../dir_screenshot/{}.png'.format(png_name))
             assert 1 != 1, e
 
         finally:
@@ -392,7 +392,7 @@ class TestSetPlmForNewProduct:
                            message="超时！/等待xpath路径:{}失败！".format(xpath_str))
         except Exception as e:
             driver.get_screenshot_as_file(
-                '../dir_screenshot/{}.png'.format(png_name))
+                '../../dir_screenshot/{}.png'.format(png_name))
             assert 1 != 1, e
 
         finally:

@@ -48,6 +48,7 @@ class TestPythonOrgSearch:
         driver.find_element_by_xpath("//*/form/div[1]/div/div/div[2]/div/div[1]/input").click()
 
         # 输入服务名称
+        time.sleep(1)
         self.wait_element_clicked(driver, xpath_str="/html/body/div[3]/div[1]/div[1]/ul/li[1]")
 
         # time.sleep(3)
@@ -114,10 +115,10 @@ class TestPythonOrgSearch:
         except Exception as e:
             if classname is not None:
                 driver.get_screenshot_as_file(
-                    '../dir_screenshot/{}.png'.format("{}_timeout".format(classname)))
+                    '../../dir_screenshot/{}.png'.format("{}_timeout".format(classname)))
             else:
                 driver.get_screenshot_as_file(
-                    '../dir_screenshot/{}.png'.format("{}_timeout".format(xpath_str.split("/")[-1])))
+                    '../../dir_screenshot/{}.png'.format("{}_timeout".format(xpath_str.split("/")[-1])))
             assert 1 != 1, e
         finally:
             pass
@@ -133,10 +134,10 @@ class TestPythonOrgSearch:
         except Exception as e:
             if classname is not None:
                 driver.get_screenshot_as_file(
-                    '../dir_screenshot/{}.png'.format("{}_timeout".format(classname)))
+                    '../../dir_screenshot/{}.png'.format("{}_timeout".format(classname)))
             else:
                 driver.get_screenshot_as_file(
-                    '../dir_screenshot/{}.png'.format("{}_timeout".format(xpath_str.split("/")[-1])))
+                    '../../dir_screenshot/{}.png'.format("{}_timeout".format(xpath_str.split("/")[-1])))
             assert 1 != 1, e
         finally:
             pass

@@ -5,7 +5,7 @@ from ...config.config import Conf
 
 
 class TestAddNewActivityType:
-    @pytest.mark.smoke
+    # @pytest.mark.smoke
     @pytest.mark.smoke0
     def test_add_new_activity_type(self, get_token, random_massage):
         information = {

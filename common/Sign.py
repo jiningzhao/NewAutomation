@@ -51,7 +51,7 @@ class Sign:
             if 'password' in data:
                 password = self.md5(data['password'], letter='upper')
 
-            # 3.加密后的password传回data中
+                # 3.加密后的password传回data中
                 data['password'] = password
 
             # 4.对data值进行字符串处理、字符化处理并进行url编码
@@ -93,10 +93,8 @@ class Sign:
 
         # 4.将升序排序的param_keys列表递归
         for param_key in param_keys:
-
             # 按照key+value的样式拼接字符串
-            string_sign += param_key+str(param[param_key])
-
+            string_sign += param_key + str(param[param_key])
 
         # 5.将secret拼接到首位两端
         string_sign = self.secret + string_sign + self.secret
@@ -106,7 +104,7 @@ class Sign:
 
     def sign_old(self, value):
 
-        string_sign = '{"value":'+str(value)+'},test'
+        string_sign = '{"value":' + str(value) + '},test'
 
         return self.md5(string_sign, letter='lower')
 
